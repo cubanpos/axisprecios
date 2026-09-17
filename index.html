@@ -1104,7 +1104,13 @@ mostrar(0);
   }
   mostrar = function (indice) {
     original(indice);
-    try { history.replaceState(null, '', '#lamina-' + (actual + 1)); } catch (e) {}
+    // En la primera lamina la direccion queda limpia; de la 2 en adelante
+    // lleva su propio enlace para poder mandar un paso suelto.
+    try {
+      history.replaceState(null, '', actual === 0
+        ? location.pathname + location.search
+        : '#lamina-' + (actual + 1));
+    } catch (e) {}
     precargar(actual + 1);
   };
   siguiente.replaceWith(siguiente.cloneNode(true));
