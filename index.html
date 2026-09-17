@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AxisPrecios · Guía rápida</title>
+<meta name="description" content="Guía rápida de AxisPrecios: el generador de etiquetas de precios para AxisPOS. En 29 láminas, cómo conectarlo, diseñar la etiqueta e imprimir toda una góndola en un clic.">
+<meta name="author" content="Yunior Reyes García · AxisSoft Santiago">
+<meta name="theme-color" content="#0a1224">
+<link rel="canonical" href="https://cubanpos.github.io/axisprecios/">
+<link rel="icon" href="img/logo.png" sizes="any">
+<link rel="apple-touch-icon" href="img/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="AxisPrecios">
+<meta property="og:title" content="AxisPrecios · Guía rápida">
+<meta property="og:description" content="Guía rápida de AxisPrecios: el generador de etiquetas de precios para AxisPOS. En 29 láminas, cómo conectarlo, diseñar la etiqueta e imprimir toda una góndola en un clic.">
+<meta property="og:url" content="https://cubanpos.github.io/axisprecios/">
+<meta property="og:image" content="https://cubanpos.github.io/axisprecios/img/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AxisPrecios · Guía rápida">
+<meta name="twitter:description" content="Guía rápida de AxisPrecios: el generador de etiquetas de precios para AxisPOS. En 29 láminas, cómo conectarlo, diseñar la etiqueta e imprimir toda una góndola en un clic.">
+<meta name="twitter:image" content="https://cubanpos.github.io/axisprecios/img/portada.png">
+<noscript><style>.lamina{display:block!important;margin-bottom:18px}footer,.barra{display:none}</style></noscript>
+
+<style>
+:root {
+  --tinta: #0a1224;
+  --tinta-2: #142b52;
+  --acento: #1f5fbf;
+  --acento-2: #4d8ef0;
+  --acento-claro: #e9eff9;
+  --verde: #22a55d;
+  --verde-claro: #e7f7ee;
+  --ambar: #956516;
+  --ambar-fondo: #fff5e1;
+  --rojo: #c2413a;
+  --rojo-fondo: #fdf1f0;
+  --fondo: #f4f6fb;
+  --tarjeta: #ffffff;
+  --linea: #e5e9f2;
+  --linea-fuerte: #cfd6e4;
+  --texto: #101828;
+  --suave: #5b6577;
+  --apagado: #98a1b3;
+  --sombra-s: 0 1px 2px rgba(16,24,40,.05);
+  --sombra-m: 0 2px 4px rgba(16,24,40,.04), 0 12px 28px rgba(16,24,40,.07);
+  --sombra-l: 0 4px 8px rgba(16,24,40,.05), 0 28px 60px rgba(16,24,40,.12);
+  --radio: 18px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+img { max-width: 100%; }
+body {
+  margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+  background: var(--fondo); color: var(--texto);
+  font: 15px/1.55 "Segoe UI Variable Text", "Segoe UI", system-ui,
+        -apple-system, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(31,95,191,.16);
+  overflow-wrap: break-word;
+}
+/* En el telefono la barra del navegador se esconde al desplazar: con dvh
+   la lamina ocupa lo que de verdad se ve, sin quedar cortada. */
+@supports (height: 100dvh) { body { min-height: 100dvh; } }
+.ico { width: 22px; height: 22px; flex: none; }
+
+/* ---------- barra de progreso y cabecera ---------- */
+.barra { height: 3px; background: rgba(31,95,191,.14); flex: none; }
+.barra > div {
+  height: 100%; width: 0; border-radius: 0 3px 3px 0;
+  background: linear-gradient(90deg, var(--acento), var(--acento-2));
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+}
+header {
+  flex: none; display: flex; align-items: center; gap: 13px;
+  padding: 13px 30px; background: rgba(255,255,255,.86);
+  backdrop-filter: blur(12px); border-bottom: 1px solid var(--linea);
+}
+header img { height: 28px; width: auto; display: block; }
+header .marca { font-weight: 600; letter-spacing: -.01em; }
+header .sub {
+  color: var(--apagado); font-size: 10.5px; letter-spacing: 1.8px;
+  text-transform: uppercase; font-weight: 600;
+}
+header .cuenta {
+  margin-left: auto; color: var(--suave); font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+header .version {
+  color: var(--apagado); font-size: 11px; font-weight: 600;
+  margin-left: 6px; letter-spacing: .3px;
+}
+
+/* ---------- laminas ---------- */
+main {
+  flex: 1 1 auto; display: flex; padding: 24px; overflow: auto;
+  overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+}
+.lamina {
+  display: none; width: 100%; max-width: 1220px; margin: auto;
+  background: var(--tarjeta); border: 1px solid var(--linea);
+  border-radius: var(--radio); box-shadow: var(--sombra-l); overflow: hidden;
+}
+.lamina.activa { display: block; animation: entra .4s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes entra {
+  from { opacity: 0; transform: translateY(10px) scale(.995); }
+  to { opacity: 1; transform: none; }
+}
+.dos-columnas { display: grid; grid-template-columns: minmax(320px, 5fr) 7fr; }
+/* Una lamina de paso sin capturas ocupa el ancho entero, con la medida de
+   lectura acotada para que el parrafo no se estire de lado a lado. */
+.una-columna { display: block; }
+.una-columna .texto { max-width: 78ch; margin: 0 auto; }
+.texto { padding: 34px 36px 32px; }
+.figuras {
+  background: linear-gradient(180deg, #fbfcfe, var(--fondo));
+  border-left: 1px solid var(--linea); padding: 26px;
+  display: flex; flex-direction: column; justify-content: center; gap: 16px;
+}
+.figura img {
+  width: auto; max-width: 100%; max-height: 54vh; height: auto;
+  display: block; margin: 0 auto; border-radius: 12px;
+  border: 1px solid var(--linea-fuerte); background: #fff;
+  box-shadow: var(--sombra-m);
+}
+.figuras.dos .figura img { max-height: 28vh; }
+.figura figcaption {
+  color: var(--suave); font-size: 12.5px; text-align: center; margin-top: 8px;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  color: var(--acento); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase;
+}
+.eyebrow::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor;
+}
+.paso-chip {
+  display: inline-flex; align-items: center; gap: 11px; margin-bottom: 14px;
+}
+.globo {
+  width: 38px; height: 38px; border-radius: 12px; flex: none;
+  display: grid; place-items: center; color: #fff; font-weight: 700;
+  font-size: 16px; box-shadow: 0 6px 16px rgba(31,95,191,.32);
+  background: linear-gradient(140deg, var(--acento-2), var(--acento));
+}
+.paso-chip .rotulo {
+  color: var(--acento); font-size: 11px; font-weight: 700;
+  letter-spacing: 1.6px; text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(24px, 2.5vw, 31px); line-height: 1.18; margin: 0 0 10px;
+  font-weight: 700; letter-spacing: -.022em;
+}
+.bajada { color: var(--suave); margin: 0 0 22px; font-size: 15.5px; }
+ul.puntos { margin: 0; padding: 0; list-style: none; }
+ul.puntos li {
+  position: relative; padding-left: 28px; margin-bottom: 13px;
+}
+ul.puntos li::before {
+  content: ""; position: absolute; left: 4px; top: 7px; width: 9px;
+  height: 9px; border-radius: 3px; transform: rotate(45deg);
+  background: linear-gradient(140deg, var(--acento-2), var(--acento));
+}
+b { font-weight: 600; }
+.puntos a { color: var(--acento); font-weight: 600; }
+/* Una direccion larga no puede ensanchar la lamina: se parte donde haga
+   falta, y los hijos de la rejilla no toman como minimo el ancho de su
+   palabra mas larga (que es lo que hace min-width:auto). */
+.puntos a, .bajada a, .texto a { overflow-wrap: anywhere; }
+.dos-columnas > *, .cierre-cuerpo > *, .una-columna > * { min-width: 0; }
+.aviso {
+  margin-top: 22px; padding: 13px 15px; border-radius: 12px; font-size: 14px;
+  display: flex; gap: 11px; align-items: flex-start; line-height: 1.45;
+}
+.aviso .sello {
+  width: 21px; height: 21px; border-radius: 7px; flex: none; color: #fff;
+  display: grid; place-items: center; font-size: 12px; font-weight: 800;
+}
+.aviso.consejo { background: var(--acento-claro); color: #17427f; }
+.aviso.consejo .sello { background: var(--acento); }
+.aviso.atencion { background: var(--ambar-fondo); color: #6b4910; }
+.aviso.atencion .sello { background: var(--ambar); }
+
+/* ---------- portada ---------- */
+.lamina.portada { border: 0; background: var(--tinta); color: #fff; }
+.portada .lienzo {
+  position: relative; padding: 68px 56px 60px; text-align: center;
+  background:
+    radial-gradient(1000px 460px at 12% -10%, rgba(77,142,240,.42), transparent 60%),
+    radial-gradient(760px 420px at 92% 8%, rgba(34,165,93,.26), transparent 62%),
+    linear-gradient(155deg, #0a1224 0%, #11224a 52%, #16346e 100%);
+}
+.portada .lienzo::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at 50% 30%, #000 10%, transparent 72%);
+}
+.portada .contenido { position: relative; z-index: 1; }
+.portada img.logo {
+  /* En bloque y con margen automatico: el rotulo de abajo es inline-flex, y
+     con el logo en linea los dos compartian renglon y quedaba corrido. */
+  display: block; height: 62px; margin: 0 auto 22px;
+  filter: drop-shadow(0 10px 26px rgba(0,0,0,.45));
+}
+.portada .eyebrow { color: #8fb8f5; }
+.portada h1 {
+  font-size: clamp(30px, 4.4vw, 50px); max-width: 15ch; margin: 0 auto 14px;
+  letter-spacing: -.03em; line-height: 1.08;
+  background: linear-gradient(180deg, #fff 30%, #bcd4f7);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.portada .bajada {
+  color: #b9c6df; max-width: 60ch; margin: 0 auto; font-size: 16.5px;
+}
+.insignias {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin-top: 30px;
+}
+.insignia {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px;
+  border-radius: 999px; font-size: 13.5px; font-weight: 600; color: #dbe6f8;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(8px);
+}
+.insignia .ico { width: 17px; height: 17px; color: #8fb8f5; }
+.pasos-mini {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  margin-top: 26px; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.pasos-mini span {
+  font-size: 12.5px; color: #93a4c2; padding: 5px 12px; border-radius: 8px;
+  background: rgba(255,255,255,.05);
+}
+.pasos-mini b { color: #cfe0fb; }
+
+/* ---------- llamados a la accion ---------- */
+.acciones { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 26px; }
+.portada .acciones { justify-content: center; }
+.cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  text-decoration: none; min-height: 46px;
+  font-size: 14.5px; font-weight: 650; padding: 12px 22px; border-radius: 12px;
+  border: 1px solid transparent;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.cta .ico { width: 18px; height: 18px; }
+.cta.principal {
+  color: #fff; background: linear-gradient(135deg, #2fc36b, var(--verde));
+  box-shadow: 0 10px 24px rgba(34,165,93,.34);
+}
+.cta.principal:hover {
+  transform: translateY(-1px); box-shadow: 0 14px 30px rgba(34,165,93,.42);
+}
+.cta.secundaria {
+  color: #dbe6f8; background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.2);
+}
+.cta.secundaria:hover { background: rgba(255,255,255,.14); }
+.cta.clara {
+  color: var(--acento); background: var(--acento-claro);
+  border-color: rgba(31,95,191,.22);
+}
+.cta.clara:hover { background: #dde8f8; }
+.demo {
+  margin-top: 20px; padding: 18px 20px; border-radius: 16px;
+  border: 1px solid rgba(31,95,191,.22);
+  background: linear-gradient(140deg, #f2f7ff, #eef8f2);
+}
+.demo .titulo {
+  font-weight: 700; font-size: 15.5px; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 9px;
+}
+.demo .titulo .ico { color: var(--verde); }
+.demo p { margin: 0 0 14px; color: var(--suave); font-size: 14px; }
+.demo .acciones { margin-top: 0; }
+header .demo-mini {
+  display: inline-flex; align-items: center; gap: 7px; margin-left: 14px;
+  text-decoration: none; font-size: 13px; font-weight: 650;
+  color: #14804a; padding: 7px 13px; border-radius: 10px;
+  background: var(--verde-claro); border: 1px solid #c9ecd8;
+}
+header .demo-mini .ico { width: 15px; height: 15px; }
+header .demo-mini:hover { background: #dcf2e6; }
+
+/* ---------- rejillas (prestaciones, tips, comparativa) ---------- */
+.rejilla {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  padding: 0 36px 34px;
+}
+.celda {
+  border: 1px solid var(--linea); border-radius: 14px; padding: 18px;
+  background: linear-gradient(180deg, #fff, #fbfcff); box-shadow: var(--sombra-s);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.celda:hover { transform: translateY(-2px); box-shadow: var(--sombra-m); }
+.celda .marco {
+  width: 40px; height: 40px; border-radius: 12px; display: grid;
+  place-items: center; margin-bottom: 12px; color: var(--acento);
+  background: var(--acento-claro);
+}
+.celda h3 { margin: 0 0 5px; font-size: 15.5px; font-weight: 650; }
+.celda p { margin: 0; color: var(--suave); font-size: 14px; line-height: 1.5; }
+.encabezado-rejilla { padding: 32px 36px 20px; }
+
+.comparativa { display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  padding: 0 36px 34px; }
+.panel { border-radius: 16px; padding: 22px; border: 1px solid var(--linea); }
+.panel h3 {
+  margin: 0 0 14px; font-size: 15px; font-weight: 700; letter-spacing: .3px;
+  display: flex; align-items: center; gap: 9px;
+}
+.panel ul { margin: 0; padding: 0; list-style: none; }
+.panel li {
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 11px;
+  font-size: 14.5px;
+}
+.panel li .ico { width: 19px; height: 19px; margin-top: 1px; }
+.panel.mal { background: var(--rojo-fondo); border-color: #f3d9d6; }
+.panel.mal h3, .panel.mal li .ico { color: var(--rojo); }
+.panel.bien { background: var(--verde-claro); border-color: #c9ecd8; }
+.panel.bien h3, .panel.bien li .ico { color: #14804a; }
+
+.figuras-mosaico {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+  padding: 0 36px 34px;
+}
+.figuras-mosaico .figura img { max-height: 30vh; }
+
+/* ---------- cierre ---------- */
+.cierre-cuerpo { display: grid; grid-template-columns: 6fr 5fr; }
+.precios { display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin: 4px 0 18px; }
+.plan {
+  border: 1px solid var(--linea); border-radius: 14px; padding: 16px 18px;
+  background: linear-gradient(180deg, #fff, #fbfcff);
+}
+.plan.destacado {
+  border-color: rgba(31,95,191,.35);
+  box-shadow: 0 10px 26px rgba(31,95,191,.13);
+}
+.plan .nombre {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--apagado); font-weight: 700;
+}
+.plan .valor {
+  font-size: 27px; font-weight: 700; letter-spacing: -.02em; margin: 4px 0 2px;
+}
+.plan .valor small { font-size: 13px; font-weight: 600; color: var(--suave); }
+.plan .detalle { color: var(--suave); font-size: 13.5px; }
+.contacto { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
+.contacto div { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+.contacto .ico { color: var(--acento); }
+.contacto b { font-weight: 600; }
+
+/* ---------- pie ---------- */
+footer {
+  flex: none; display: flex; align-items: center; gap: 16px;
+  padding: 13px 30px; background: rgba(255,255,255,.9);
+  backdrop-filter: blur(12px); border-top: 1px solid var(--linea);
+}
+.puntos-nav { display: flex; gap: 2px; margin: 0 auto; }
+/* El boton mide 26 px para el dedo; lo que se ve es el punto de adentro. */
+.punto {
+  width: 26px; height: 26px; padding: 0; border: 0; background: none;
+  display: grid; place-items: center; cursor: pointer;
+}
+.punto::after {
+  content: ""; width: 8px; height: 8px; border-radius: 999px;
+  background: var(--linea-fuerte); transition: all .22s ease;
+}
+.punto:hover::after { background: var(--apagado); }
+.punto.activo::after {
+  width: 24px;
+  background: linear-gradient(90deg, var(--acento), var(--acento-2));
+}
+button.nav {
+  font: inherit; font-weight: 600; font-size: 14.5px; cursor: pointer;
+  border-radius: 11px; padding: 11px 22px; min-height: 46px;
+  border: 1px solid transparent;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.anterior { background: #fff; color: var(--suave); border-color: var(--linea-fuerte); }
+.anterior:hover:not(:disabled) { background: var(--fondo); }
+.anterior:disabled { opacity: .38; cursor: default; }
+.siguiente {
+  color: #fff; background: linear-gradient(135deg, var(--acento-2), var(--acento));
+  box-shadow: 0 8px 20px rgba(31,95,191,.3);
+}
+.siguiente:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(31,95,191,.36); }
+button.nav:focus-visible { outline: 3px solid #9dbdf0; outline-offset: 2px; }
+
+/* ---------- tamanos de pantalla ---------- */
+@media (max-width: 1100px) {
+  .rejilla { gap: 12px; }
+}
+@media (max-width: 980px) {
+  .dos-columnas, .cierre-cuerpo { grid-template-columns: 1fr; }
+  .figuras { border-left: 0; border-top: 1px solid var(--linea); }
+  .rejilla, .figuras-mosaico { grid-template-columns: 1fr 1fr; }
+  .comparativa, .precios { grid-template-columns: 1fr; }
+  .texto { padding: 26px 22px 22px; }
+  .rejilla, .figuras-mosaico, .comparativa { padding: 0 22px 26px; }
+  .encabezado-rejilla { padding: 24px 22px 16px; }
+  header, footer { padding: 12px 16px; }
+  main { padding: 14px; }
+  header .sub { display: none; }
+  .portada .lienzo { padding: 44px 24px 40px; }
+  .figura img { max-height: 46vh; }
+  .figuras.dos .figura img { max-height: 23vh; }
+}
+@media (max-width: 700px) {
+  .rejilla, .figuras-mosaico { grid-template-columns: 1fr; }
+  .lamina { border-radius: 14px; }
+  main { padding: 10px; }
+  .texto { padding: 22px 18px 20px; }
+  .rejilla, .figuras-mosaico, .comparativa { padding: 0 18px 22px; gap: 11px; }
+  .encabezado-rejilla { padding: 22px 18px 14px; }
+  .figuras { padding: 18px; }
+  .figura img { max-height: 40vh; }
+  .figuras.dos .figura img { max-height: 26vh; }
+  .figuras-mosaico .figura img { max-height: 40vh; }
+  /* Botones de accion a todo el ancho: mas facil de acertar con el pulgar. */
+  .acciones { gap: 9px; }
+  .acciones .cta { flex: 1 1 100%; }
+  .bajada { font-size: 15px; }
+  .celda { padding: 16px; }
+  .demo { padding: 16px; }
+}
+@media (max-width: 560px) {
+  /* Con tantas laminas los puntitos no entran: queda la cuenta de arriba. */
+  .puntos-nav { display: none; }
+  footer { gap: 10px; padding: 10px 12px; }
+  footer button.nav { flex: 1 1 0; padding: 12px 10px; }
+  header { gap: 10px; padding: 10px 12px; }
+  header .marca { font-size: 13.5px; }
+  header .cuenta { font-size: 12px; }
+  header .demo-mini { margin-left: 8px; padding: 8px 11px; font-size: 12.5px; }
+  .portada .lienzo { padding: 34px 18px 32px; }
+  .portada img.logo { height: 50px; margin-bottom: 16px; }
+  .portada h1 { max-width: 100%; }
+  .insignias { gap: 8px; }
+  .insignia { font-size: 12.5px; padding: 8px 13px; }
+  .pasos-mini { margin-top: 20px; padding-top: 18px; }
+  .globo { width: 34px; height: 34px; border-radius: 10px; font-size: 15px; }
+  .precios { gap: 10px; }
+  .plan { padding: 14px 16px; }
+}
+@media (max-width: 560px) {
+  /* Con el rotulo partido en dos lineas, el punto de la izquierda quedaba
+     suelto en su propio renglon: en pantalla angosta se saca. */
+  .eyebrow { display: block; }
+  .eyebrow::before { display: none; }
+}
+@media (max-width: 380px) {
+  header .marca, header .sub { display: none; }
+  .eyebrow, .paso-chip .rotulo { letter-spacing: 1.2px; }
+}
+/* Telefono acostado: sobra ancho y falta alto. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .figura img { max-height: 62vh; }
+  .figuras.dos .figura img { max-height: 30vh; }
+  .portada .lienzo { padding: 26px 24px 24px; }
+  .portada img.logo { height: 42px; margin-bottom: 12px; }
+  .texto { padding: 20px 22px 18px; }
+}
+/* ---------- la captura, a pantalla completa ---------- */
+/* En un telefono una captura de 700 px se ve, pero no se lee. Tocandola se
+   abre sola, entera y con la posibilidad de acercarla. */
+.figura img { cursor: zoom-in; }
+.lupa {
+  position: fixed; inset: 0; z-index: 50; display: none;
+  background: rgba(8, 14, 28, .88); backdrop-filter: blur(3px);
+  padding: 16px; overflow: auto; overscroll-behavior: contain;
+}
+.lupa.abierta { display: grid; place-items: center; }
+.lupa figure {
+  margin: 0; display: grid; place-items: center; width: 100%;
+  max-width: 100%; min-width: 0;
+}
+.lupa img {
+  max-width: 100%; max-height: calc(100% - 46px); width: auto; height: auto;
+  border-radius: 10px; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,.5);
+}
+.lupa figcaption {
+  color: #dbe6f8; font-size: 13.5px; text-align: center; margin-top: 12px;
+  max-width: 60ch;
+}
+.lupa .cerrar {
+  position: fixed; top: 10px; right: 10px; width: 44px; height: 44px;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.28);
+  background: rgba(255,255,255,.12); color: #fff; font-size: 22px;
+  line-height: 1; cursor: pointer; display: grid; place-items: center;
+}
+.lupa .cerrar:hover { background: rgba(255,255,255,.2); }
+
+/* ---------- pantallas muy angostas y muy anchas ---------- */
+@media (max-width: 400px) {
+  .texto { padding: 18px 14px 16px; }
+  main { padding: 8px; }
+  ul.puntos li { padding-left: 24px; }
+  .aviso { padding: 11px 12px; font-size: 13.5px; }
+  .figuras { padding: 14px; }
+}
+@media (min-width: 1500px) {
+  /* En un monitor grande la lamina deja de crecer: una linea de 110
+     caracteres no se lee de corrido. */
+  .lamina { max-width: 1320px; }
+}
+
+/* Doce prestaciones: en pantalla ancha van de a cuatro por renglon, para
+   que la lamina entre sin tener que desplazarla. */
+.lamina.prestaciones .rejilla { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1100px) {
+  .lamina.prestaciones .rejilla { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 980px) {
+  .lamina.prestaciones .rejilla { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .lamina.prestaciones .rejilla { grid-template-columns: 1fr; }
+}
+/* La altura de las capturas, en dvh: en el telefono la barra del navegador
+   se esconde al desplazar y con vh la captura quedaba cortada. */
+@supports (height: 100dvh) {
+  .figura img { max-height: 54dvh; }
+  .figuras.dos .figura img { max-height: 28dvh; }
+  .figuras-mosaico .figura img { max-height: 30dvh; }
+  @media (max-width: 980px) {
+    .figura img { max-height: 46dvh; }
+    .figuras.dos .figura img { max-height: 23dvh; }
+  }
+  @media (max-width: 700px) {
+    .figura img { max-height: 40dvh; }
+    .figuras.dos .figura img { max-height: 26dvh; }
+    .figuras-mosaico .figura img { max-height: 40dvh; }
+  }
+  @media (max-height: 560px) and (orientation: landscape) {
+    .figura img { max-height: 62dvh; }
+    .figuras.dos .figura img { max-height: 30dvh; }
+  }
+}
+/* Para quien pidio menos movimiento en el sistema. */
+@media (prefers-reduced-motion: reduce) {
+  .lamina.activa { animation: none; }
+  * { transition-duration: .01ms !important; }
+}
+
+
+/* Los puntitos, solo donde entran; si no queda la cuenta de
+   arriba. El ancho sale de cuantas laminas hay. */
+@media (max-width: 1074px) {
+  .puntos-nav { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="barra"><div id="progreso"></div></div>
+<header>
+  <img src="img/logo.webp" width="190" height="129" alt="AxisPrecios">
+  <div>
+    <div class="sub">Generador de etiquetas de precios</div>
+    <div class="marca">AxisPrecios &middot; Guía rápida
+      <span class="version">v1.15</span></div>
+  </div>
+  <div class="cuenta" id="cuenta"></div>
+<a class="demo-mini" href="https://wa.me/5358146895?text=Hola%20Yunior%2C%20quiero%20una%20demo%20de%20AxisPrecios" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M18.5 15.5 19.4 18l2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9Z"/></svg>Solicitar demo</a>
+</header>
+<main>
+<section class="lamina portada"><div class="lienzo"><div class="contenido"><img class="logo" src="img/logo.webp" width="190" height="129" alt="AxisPrecios"><div class="eyebrow">Generador de etiquetas de precios para AxisPOS</div><h1>Su góndola, siempre al día</h1><p class="bajada">AxisPrecios toma los precios de su propio AxisPOS y los imprime en la térmica que ya tiene en la caja. Se instala con AxisPrecios-1.15-Setup.exe, que elige solo la versión de 32 o de 64 bits. Esta guía lo deja listo en ocho pasos y le muestra todo lo que hace.</p><div class="insignias"><span class="insignia"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg>15 días de prueba</span><span class="insignia"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Z"/><path d="M20 6v12c0 1.7-3.6 3-8 3s-8-1.3-8-3V6"/><path d="M20 12c0 1.7-3.6 3-8 3s-8-1.3-8-3"/></svg>Conecta con AxisPOS</span><span class="insignia"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="3" y="9" width="18" height="7" rx="2"/><path d="M7 14h10v6H7z"/><circle cx="17.5" cy="12" r=".8" fill="currentColor" stroke="none"/></svg>Térmica 58 y 80 mm</span><span class="insignia"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 20 6v6.2c0 4.5-3.3 7.6-8 9-4.7-1.4-8-4.5-8-9V6Z"/><path d="m8.8 12 2.3 2.3 4.3-4.6"/></svg>Windows 10 y 11</span></div><div class="acciones"><a class="cta principal" href="https://wa.me/5358146895?text=Hola%20Yunior%2C%20quiero%20una%20demo%20de%20AxisPrecios" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg>Solicitar su demo por WhatsApp</a><a class="cta secundaria" href="mailto:axissoftstgo@gmail.com?subject=Demo%20de%20AxisPrecios"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4.5 4.5V21H6Z"/><path d="M14 3v5h4.5"/><path d="M9 13h6M9 17h4"/></svg>Escribir por correo</a></div><div class="pasos-mini"><span><b>1</b> &nbsp;Conectar con la base de AxisPOS</span><span><b>2</b> &nbsp;Definir el precio que se imprime</span><span><b>3</b> &nbsp;Elegir el tipo de moneda</span><span><b>4</b> &nbsp;Cargar los datos del negocio</span><span><b>5</b> &nbsp;Elegir la impresora</span><span><b>6</b> &nbsp;Elegir la carpeta de los archivos exportados</span><span><b>7</b> &nbsp;Diseñar la etiqueta</span><span><b>8</b> &nbsp;Crear los usuarios</span></div></div></div></section>
+<section class="lamina problema"><div class="encabezado-rejilla"><div class="eyebrow">Por qué</div><h1>El precio de la góndola y el de la caja tienen que ser el mismo</h1><p class="bajada">Cuando no lo son, el cliente discute en la caja, la cajera llama al dueño y la cola se detiene. Copiar precios a mano es la causa, y es evitable.</p></div><div class="comparativa"><div class="panel mal"><h3><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M3 9 5 4h14l2 5"/><path d="M9 21v-6h6v6"/></svg>Sin AxisPrecios</h3><ul><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg><span>Etiquetas escritas a mano o en Word</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg><span>Un precio cambia y hay que rehacer el cartel</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg><span>Errores de tipeo que nadie nota hasta la caja</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg><span>Nadie sabe qué góndola quedó vieja</span></li></ul></div><div class="panel bien"><h3><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 20 6v6.2c0 4.5-3.3 7.6-8 9-4.7-1.4-8-4.5-8-9V6Z"/><path d="m8.8 12 2.3 2.3 4.3-4.6"/></svg>Con AxisPrecios</h3><ul><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.4 12.2 2.5 2.5 4.8-5.2"/></svg><span>Los precios salen de la base, no de la memoria</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.4 12.2 2.5 2.5 4.8-5.2"/></svg><span>Una categoría entera reimpresa en un clic</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.4 12.2 2.5 2.5 4.8-5.2"/></svg><span>Avisa qué etiquetas quedaron viejas</span></li><li><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.4 12.2 2.5 2.5 4.8-5.2"/></svg><span>Listados y auditoría para controlar la tienda</span></li></ul></div></div></section>
+<section class="lamina prestaciones"><div class="encabezado-rejilla"><div class="eyebrow">Qué incluye</div><h1>Todo lo que hace, de un vistazo</h1><p class="bajada">Pensado para tiendas de mercado, minimercados y almacenes: lo que se usa todos los días, a mano.</p></div><div class="rejilla"><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Z"/><path d="M20 6v12c0 1.7-3.6 3-8 3s-8-1.3-8-3V6"/><path d="M20 12c0 1.7-3.6 3-8 3s-8-1.3-8-3"/></svg></div><h3>Conectado a su AxisPOS</h3><p>Los precios salen de la base del negocio: Leer de AxisPos llena la conexión solo. Nada se copia a mano.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Vista previa a escala real</h3><p>Ve la etiqueta como va a salir, al ancho del rollo, y cada cambio se redibuja al instante.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg></div><h3>Una góndola entera en un clic</h3><p>Elija la categoría y sale toda. O busque un producto e imprima una sola etiqueta.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.4V5a2 2 0 0 1 2-2h7.4a2 2 0 0 1 1.4.6l6.6 6.6a2 2 0 0 1 0 2.8l-7.4 7.4a2 2 0 0 1-2.8 0l-6.6-6.6a2 2 0 0 1-.6-1.4Z"/><circle cx="7.8" cy="7.8" r="1.4"/></svg></div><h3>Plantillas y Mis Etiquetas</h3><p>Quince diseños listos por rubro, y los suyos guardados con un nombre para ponerlos de una vez.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3h-3zM20 14v3M14 20h6"/></svg></div><h3>Logo, QR y 85 símbolos</h3><p>Su marca, un QR a su catálogo, insignias de descuento y pictogramas de embalaje.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M18.5 15.5 19.4 18l2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9Z"/></svg></div><h3>Promociones y Etiqueta Libre</h3><p>Quince tipos de promoción sin tocar el precio que cobra la caja, y carteles sin datos de producto.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v14M7 5v14M10.5 5v10M13.5 5v14M17 5v10M20 5v14"/></svg></div><h3>Códigos de barras que se leen</h3><p>EAN13, CODE39 y CODE128, con el ancho calculado y la lista de los que no sirven.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="3" y="9" width="18" height="7" rx="2"/><path d="M7 14h10v6H7z"/><circle cx="17.5" cy="12" r=".8" fill="currentColor" stroke="none"/></svg></div><h3>Listados en térmica y PDF</h3><p>La lista de precios por el rollo, planillas en PDF y las etiquetas en hoja Carta para la láser.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg></div><h3>Avisa cuando cambia un precio</h3><p>Mira AxisPOS cada tanto, incluso con el programa cerrado, y marca las etiquetas que quedaron viejas.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4.5 4.5V21H6Z"/><path d="M14 3v5h4.5"/><path d="M9 13h6M9 17h4"/></svg></div><h3>Precios calculados, con respaldo</h3><p>Precio de venta y precio de tarjeta para toda la lista, con confirmación, respaldo y Deshacer.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-4M11 16V7M15 16v-6M19 16V9"/></svg></div><h3>Auditoría, alertas y gráficos</h3><p>Quién cambió cada precio y cada tasa, lo que conviene revisar y diecisiete gráficos del negocio.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0"/><path d="M16.2 5.2a3.2 3.2 0 0 1 0 5.9M18 20a6.3 6.3 0 0 0-2.2-4.8"/></svg></div><h3>Tres roles y ayuda a mano</h3><p>El cajero imprime y usa las etiquetas guardadas. Manual, guía rápida, Problemas y Soluciones, FeedBack y actualizaciones, desde Ayuda.</p></article></div></section>
+<section class="lamina mosaico"><div class="encabezado-rejilla"><div class="eyebrow">Así se ve</div><h1>Simple por fuera, completo por dentro</h1><p class="bajada">La pantalla principal muestra los productos a la izquierda y la etiqueta a la derecha. Lo demás aparece cuando hace falta.</p></div><div class="figuras-mosaico">
+<figure class="figura"><img src="img/02-elija-lo-que-va-a-salir-impreso.webp" width="700" height="432" loading="lazy" decoding="async" alt="Elija lo que va a salir impreso."><figcaption>Elija lo que va a salir impreso.</figcaption></figure>
+<figure class="figura"><img src="img/03-plantillas-predisenadas.webp" width="614" height="749" loading="lazy" decoding="async" alt="Plantillas prediseñadas."><figcaption>Plantillas prediseñadas.</figcaption></figure>
+<figure class="figura"><img src="img/04-graficos-del-negocio.webp" width="700" height="444" loading="lazy" decoding="async" alt="Gráficos del negocio."><figcaption>Gráficos del negocio.</figcaption></figure>
+</div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Antes de empezar</div>
+<h1>Entrar por primera vez</h1>
+<p class="bajada">Recién instalado, el programa saluda con la bienvenida —desde ese día corren los 15 días de prueba— y no trae ninguna contraseña de fábrica.</p>
+<ul class="puntos">
+<li>Pide crear la contraseña del <b>Propietario</b>: se escribe dos veces y se entra. Es la de este negocio, y solo de este equipo.</li>
+<li>Desde ella se definen después las del <b>Manager</b> y el <b>Cajero</b>: es el paso 8.</li>
+<li>La ventana trae un teclado numérico grande para las pantallas táctiles de caja; el teclado de siempre también sirve.</li>
+</ul>
+<div class="aviso atencion"><span class="sello">!</span><span>Anótela en un lugar seguro. Si se pierde, la única forma de volver a entrar es pidiéndole al proveedor que entre con la suya.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/05-la-ventana-de-ingreso.webp" width="398" height="672" loading="lazy" decoding="async" alt="La ventana de ingreso."><figcaption>La ventana de ingreso.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Antes de empezar</div>
+<h1>Cómo se maneja</h1>
+<p class="bajada">La pantalla principal tiene cuatro zonas, y todas las ventanas usan los mismos controles: se aprenden una vez.</p>
+<ul class="puntos">
+<li><b>Arriba</b>, los menús —Sistema, Configuración, Contenido y Diseño, Operaciones, Auditoría y Listados— y a la derecha Ayuda y Acerca de. <b>Izquierda</b>, los productos. <b>Derecha</b>, la vista previa e Imprimir. <b>Abajo</b>, qué se va a imprimir y a qué base está conectado.</li>
+<li><b>Interruptor</b> — azul encendido, gris apagado. Donde hay que elegir una opción de varias, encender una apaga la que estaba.</li>
+<li><b>Contador ‹ ›</b> — para los números de un rango corto: ‹ baja, › sube, y dejándolo apretado sigue contando.</li>
+<li><b>Globo</b> — con el cursor quieto sobre un botón importante, dice qué hace el clic y qué no.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Todas las ventanas abren en el centro de la pantalla, y los menús largos van en bloques con una cabecera gris que dice de qué son las entradas.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/06-las-cuatro-zonas-de-la-pantalla-principal.webp" width="700" height="432" loading="lazy" decoding="async" alt="Las cuatro zonas de la pantalla principal."><figcaption>Las cuatro zonas de la pantalla principal.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">1</div><div class="rotulo">Paso 1 de 8</div></div>
+<h1>Conectar con la base de AxisPOS</h1>
+<p class="bajada">Configuración › Conexión a BD. Es de dónde salen los productos y los precios; solo la abre el Propietario.</p>
+<ul class="puntos">
+<li>Viene con el usuario <b>root</b> y la contraseña <b>root</b>, lo que trae AxisPOS de fábrica: en la mayoría de las cajas conecta sin tocar nada.</li>
+<li>Oprima <b>Leer de AxisPos</b>: copia el servidor, el usuario y la base de la instalación de AxisPOS de este equipo. La contraseña no la toma; con root casi nunca hace falta.</li>
+<li>Termine con <b>Probar conexión</b>: confirma que la base responde y cuenta los productos activos.</li>
+<li>Sin hacer nada más, el programa deja preparado un usuario <b>axisprecios</b> que solo puede leer esa base, con su contraseña guardada cifrada.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>¿El MariaDB está en otra PC? Ponga su IP en Servidor. ¿No aparece Leer de AxisPos? Use Detectar, debajo del campo de la base. Si el servidor lo admite, encienda Cifrar la conexión.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/07-los-datos-de-la-base-de-datos.webp" width="700" height="663" loading="lazy" decoding="async" alt="Los datos de la base de datos."><figcaption>Los datos de la base de datos.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">2</div><div class="rotulo">Paso 2 de 8</div></div>
+<h1>Definir el precio que se imprime</h1>
+<p class="bajada">Configuración › Seleccionar Precios. AxisPOS guarda varios grupos de precio y hay que decirle cuál va en la etiqueta.</p>
+<ul class="puntos">
+<li>Oprima <b>Detectar</b>: muestra cuántos productos tienen cargado cada grupo. El que tiene precio en casi todo el catálogo es el de venta al público.</li>
+<li>Elija el grupo. El separador decimal se ajusta solo, según si ese grupo guarda centavos.</li>
+<li>Los productos sin precio en ese grupo no salen en la lista: con el interruptor <b>Sólo Productos sin Precio</b> se ven aparte, para ponerles precio.</li>
+</ul>
+</div><div class="figuras">
+<figure class="figura"><img src="img/08-la-eleccion-del-grupo-de-precio.webp" width="566" height="542" loading="lazy" decoding="async" alt="La elección del grupo de precio."><figcaption>La elección del grupo de precio.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">3</div><div class="rotulo">Paso 3 de 8</div></div>
+<h1>Elegir el tipo de moneda</h1>
+<p class="bajada">Configuración › Tipo de Moneda. Define en qué moneda salen impresos los precios.</p>
+<ul class="puntos">
+<li>Si las etiquetas van en la misma moneda que guarda la base, deje <b>apagado</b> «Expresar los precios en otra moneda».</li>
+<li>Si hay que convertir, enciéndalo, elija la moneda y cargue la tasa y su sentido. <b>Detectar</b> vuelve a leer las monedas de la base.</li>
+<li>El ejemplo con un precio concreto dice si la cuenta está bien: si ese número no tiene sentido, cambie el sentido de la tasa.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Cada cambio se ve al instante en la vista previa, sin gastar papel.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/09-la-conversion-de-moneda.webp" width="556" height="478" loading="lazy" decoding="async" alt="La conversión de moneda."><figcaption>La conversión de moneda.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">4</div><div class="rotulo">Paso 4 de 8</div></div>
+<h1>Cargar los datos del negocio</h1>
+<p class="bajada">Configuración › Datos del Negocio. Se cargan una vez y de ahí los toman la etiqueta, los reportes y la solicitud de licencia.</p>
+<ul class="puntos">
+<li>Escriba el <b>nombre</b>, la <b>dirección</b>, el <b>teléfono</b> y el <b>correo</b> del negocio.</li>
+<li>Elija de la lista el <b>tipo de negocio</b> y el <b>tipo de actor económico</b>.</li>
+<li>El interruptor <b>Datos del negocio</b> decide si salen en el Excel, el PDF y la térmica.</li>
+</ul>
+<div class="aviso atencion"><span class="sello">!</span><span>El correo tiene que tener forma de correo, nombre@dominio.com: es por donde puede llegarle la licencia.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/10-los-datos-del-negocio.webp" width="469" height="682" loading="lazy" decoding="async" alt="Los datos del negocio."><figcaption>Los datos del negocio.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">5</div><div class="rotulo">Paso 5 de 8</div></div>
+<h1>Elegir la impresora</h1>
+<p class="bajada">Configuración › Impresora: Tipo de Papel. Es la térmica de la caja, la misma que imprime el ticket de AxisPOS.</p>
+<ul class="puntos">
+<li>Elija la <b>XP-58</b> o la que use la caja para los tickets. Si no existe en Windows, el programa muestra las que sí están instaladas.</li>
+<li>Encienda el ancho del rollo cargado: <b>58 mm</b> u <b>80 mm</b>. De eso depende cuánto entra y si cabe el código de barras.</li>
+<li>Elija el <b>corte</b>: <b>Después de cada etiqueta</b> deja cada precio suelto, listo para pegar; <b>Al final de la tanda</b> saca todo de una tira; <b>Sin corte</b> es para impresoras sin cuchilla.</li>
+<li><b>Líneas de avance al final</b>, de 0 a 10 con el contador ‹ ›: si el corte se lleva la última línea, súbalas.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Pruebe una etiqueta antes de seguir.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/11-la-impresora-y-el-rollo-cargado.webp" width="520" height="463" loading="lazy" decoding="async" alt="La impresora y el rollo cargado."><figcaption>La impresora y el rollo cargado.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">6</div><div class="rotulo">Paso 6 de 8</div></div>
+<h1>Elegir la carpeta de los archivos exportados</h1>
+<p class="bajada">Configuración › Ubicación de Exportación. Es dónde van a parar los archivos que se guardan en vez de imprimirse.</p>
+<ul class="puntos">
+<li>De fábrica ya viene puesta <b>C:\AxisPreciosExport</b>, en la raíz del disco: la misma para todas las cuentas de Windows de esa computadora.</li>
+<li>Ahí la propone el programa al guardar los <b>.prn</b>, los <b>PDF</b> y las planillas de <b>Excel</b>.</li>
+<li>Se puede cambiar con <b>Examinar...</b>; si la carpeta todavía no existe, se crea sola la primera vez.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Los diseños de Mis Etiquetas quedan siempre en C:\AxisPreciosExport, aunque cambie la carpeta.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/12-la-carpeta-donde-se-guardan-los-archivos.webp" width="580" height="347" loading="lazy" decoding="async" alt="La carpeta donde se guardan los archivos."><figcaption>La carpeta donde se guardan los archivos.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">7</div><div class="rotulo">Paso 7 de 8</div></div>
+<h1>Diseñar la etiqueta</h1>
+<p class="bajada">Contenido y Diseño. Qué sale impreso, dónde y de qué tamaño; todo se ve al instante en la vista previa.</p>
+<ul class="puntos">
+<li><b>Plantillas Prediseñadas</b> — quince diseños listos por rubro. Las que llevan QR lo encienden con una dirección de ejemplo; la suya se escribe en <b>Insertar Logo & QR</b>.</li>
+<li><b>Contenido de la Etiqueta</b> — un interruptor por dato: nombre del negocio, nombre del producto, unidad, C/U, código y fechas, cada uno con su lugar. Abajo, el formato del precio.</li>
+<li><b>Letras (Tipos y Tamaños)</b> — seis tipografías, tamaños de 1 a 8 para el nombre y el precio, y la codificación de los acentos.</li>
+<li><b>Código de barras</b> — «Automática» elige EAN13 o CODE39; el alto y el ancho van con el contador ‹ ›, y <b>Revisar códigos de barras</b> dice cuáles no sirven.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>El botón Predeterminado devuelve solo esa sección a como venía, sin tocar el resto.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/03-plantillas-predisenadas.webp" width="614" height="749" loading="lazy" decoding="async" alt="Las plantillas prediseñadas."><figcaption>Las plantillas prediseñadas.</figcaption></figure>
+<figure class="figura"><img src="img/13-que-lleva-la-etiqueta.webp" width="700" height="652" loading="lazy" decoding="async" alt="Qué lleva la etiqueta."><figcaption>Qué lleva la etiqueta.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="paso-chip"><div class="globo">8</div><div class="rotulo">Paso 8 de 8</div></div>
+<h1>Crear los usuarios</h1>
+<p class="bajada">Sistema › Usuarios y contraseñas. Hay tres usuarios, y cada uno llega hasta donde le corresponde.</p>
+<ul class="puntos">
+<li><b>Propietario</b> — acceso total. Define las tres contraseñas y es el único que abre la conexión a la base, Operaciones, Auditoría y los archivos PRN.</li>
+<li><b>Manager</b> — la configuración y el diseño de la etiqueta, sin la conexión a la base. Puede definir la contraseña del Cajero.</li>
+<li><b>Cajero</b> — elegir productos e imprimir. Llega a <b>Cambiar de Usuario</b>, a <b>Listados</b> —sin los archivos PRN—, a <b>Mis Etiquetas</b> para usar un diseño guardado, y a la Ayuda. No configura, no usa la Etiqueta Libre y no borra ni renombra las etiquetas guardadas.</li>
+<li>Para cambiar sin cerrar el programa: <b>Sistema › Cambiar de Usuario</b>. Después de tres intentos fallidos, cada intento tarda un poco más.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Las contraseñas no se guardan tal cual: se guarda un resumen del que no se puede volver atrás.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/14-los-tres-roles-en-sistema-usuarios-y-contrasenas.webp" width="650" height="641" loading="lazy" decoding="async" alt="Los tres roles, en Sistema › Usuarios y contraseñas."><figcaption>Los tres roles, en Sistema › Usuarios y contraseñas.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Todos los días</div>
+<h1>Imprimir las etiquetas</h1>
+<p class="bajada">La regla es una sola: sale lo que está marcado, y si no hay nada marcado, sale toda la lista que está viendo.</p>
+<ul class="puntos">
+<li>Elija la <b>categoría</b> o use el buscador: encuentra por código, descripción o código de barras, sin acentos y con las palabras en cualquier orden.</li>
+<li>Marque con un clic; <b>Ctrl</b> suma sueltos, <b>Shift</b> marca un rango, y <b>Marcar todo</b> o <b>Ctrl+A</b> toda la lista.</li>
+<li>La columna <b>Copias</b> dice cuántas veces sale cada producto: doble clic para cambiar una, o el contador de la derecha y <b>Aplicar</b> para varias.</li>
+<li>La barra de abajo cuenta cuántas etiquetas van a salir, e <b>Imprimir</b> pregunta antes, con la cantidad y la impresora.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Las filas en verde son precios que cambiaron en AxisPOS; las ámbar, productos que no pueden llevar código de barras.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/02-elija-lo-que-va-a-salir-impreso.webp" width="700" height="432" loading="lazy" decoding="async" alt="Dos productos marcados: solo esas dos etiquetas van a salir."><figcaption>Dos productos marcados: solo esas dos etiquetas van a salir.</figcaption></figure>
+<figure class="figura"><img src="img/15-las-copias-y-la-vista-previa.webp" width="519" height="400" loading="lazy" decoding="async" alt="Las copias y la vista previa."><figcaption>Las copias y la vista previa.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Siempre al día</div>
+<h1>Avisa cuando cambia un precio en AxisPOS</h1>
+<p class="bajada">El programa mira los precios cada tanto y marca las etiquetas que quedaron viejas en la góndola.</p>
+<ul class="puntos">
+<li>Aparece una barra verde arriba de la lista —«2 precios cambiaron en AxisPos desde el…»— y esos productos quedan pintados.</li>
+<li><b>Ver solo esos</b> los deja marcados: alcanza con Imprimir. <b>Listo</b> da el asunto por cerrado.</li>
+<li>En Configuración › Conexión a BD, <b>Monitoreo de precios</b>: mirar la base cada 1 a 240 minutos. De fábrica, cada 10.</li>
+<li><b>Vigilar con el programa cerrado</b> deja un vigía junto al reloj de Windows que avisa en la esquina de la pantalla aunque nadie tenga AxisPrecios abierto.</li>
+<li><b>Avisar con la descripción</b> — ese aviso nombra los productos por su descripción, recortada si es larga («Refresco naranj…»), en vez de por su código.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>El vigía solo lee: no escribe nada en AxisPOS.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/16-el-aviso-arriba-de-la-lista-de-productos.webp" width="700" height="432" loading="lazy" decoding="async" alt="El aviso, arriba de la lista de productos."><figcaption>El aviso, arriba de la lista de productos.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Para destacar</div>
+<h1>Logo, QR, símbolos y texto libre</h1>
+<p class="bajada">Contenido y Diseño. Lo que no viene de AxisPOS y hace que la etiqueta sea de su negocio.</p>
+<ul class="puntos">
+<li><b>Insertar Logo & QR</b> — el logo, en PNG o JPG, nítido o con tramado para fotos, acercado y recortado a gusto; y un QR a su catálogo, de hasta 271 caracteres.</li>
+<li><b>Insertar Símbolos</b> — 85 para elegir viéndolos: seguridad, comercio, insignias de -5 % a -50 % y 36 pictogramas de embalaje. Uno por etiqueta.</li>
+<li><b>Insertar texto libre</b> — un aviso suyo en todas las etiquetas, como «Precio en efectivo» o la sucursal: arriba o al pie, de tamaño 1 a 8 y en negrita si hace falta.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Todo sale igual por la térmica, en la vista previa y en las etiquetas a PDF.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/17-logo-y-qr.webp" width="700" height="694" loading="lazy" decoding="async" alt="Logo y QR."><figcaption>Logo y QR.</figcaption></figure>
+<figure class="figura"><img src="img/18-la-grilla-de-simbolos.webp" width="628" height="708" loading="lazy" decoding="async" alt="La grilla de símbolos."><figcaption>La grilla de símbolos.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Para vender más</div>
+<h1>Promociones que se leen desde el pasillo</h1>
+<p class="bajada">Contenido y Diseño › Agregar Promociones. Un aviso de dos líneas debajo del precio, debajo de las barras o arriba de todo.</p>
+<ul class="puntos">
+<li>Quince tipos: descuento directo, por forma de pago, por día, oferta de la casa, liquidación, por cantidad, 2x1, precio anterior y actual, devolución en dinero y más.</li>
+<li>Arriba el texto que escribe usted («SOLO HOY»), abajo el valor que calcula el programa («-$200», «2 x 1»). Sin texto no se imprime nada.</li>
+<li>El descuento puede salir de las <b>reglas de precio de AxisPOS</b>: las ofrece con el tipo y el porciento ya puestos.</li>
+<li>Una promoción a la vez: dos no se leen desde el pasillo.</li>
+</ul>
+<div class="aviso atencion"><span class="sello">!</span><span>El precio grande nunca cambia: es el que cobra la caja. Una etiqueta con otro precio es justo lo que el programa existe para evitar.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/19-la-pantalla-de-promociones.webp" width="586" height="581" loading="lazy" decoding="async" alt="La pantalla de promociones."><figcaption>La pantalla de promociones.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Carteles y diseños propios</div>
+<h1>Etiqueta Libre y Mis Etiquetas</h1>
+<p class="bajada">Para lo que no es una etiqueta de precio, y para no armar dos veces el mismo diseño.</p>
+<ul class="puntos">
+<li><b>Etiqueta Libre</b>, arriba de la vista previa — un cartel sin datos de producto: cabecera, cuerpo y pie, y un elemento gráfico a elegir entre logo, QR, símbolo o código de barras.</li>
+<li>Mientras está activa, <b>toda la tanda</b> sale con ese diseño. Al apagarla se borra, y al cerrarla el programa ofrece guardarla.</li>
+<li><b>Guardar en Mis Etiquetas</b> guarda con un nombre el diseño que tenga puesto: la oferta del fin de semana, la de precio con su logo.</li>
+<li><b>Mis Etiquetas</b> muestra la lista y el dibujo de la elegida; <b>Usar esta</b> la pone de una vez. Caben hasta 60.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>El ancho del papel y la tasa de la moneda no viajan con el diseño: se usan los de hoy.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/20-la-etiqueta-libre.webp" width="563" height="486" loading="lazy" decoding="async" alt="La Etiqueta Libre."><figcaption>La Etiqueta Libre.</figcaption></figure>
+<figure class="figura"><img src="img/21-mis-etiquetas.webp" width="700" height="561" loading="lazy" decoding="async" alt="Mis Etiquetas."><figcaption>Mis Etiquetas.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Menú Listados</div>
+<h1>Listados en térmica, PDF y hoja Carta</h1>
+<p class="bajada">Todo lo que sale del programa hacia el papel o un archivo, en un solo menú.</p>
+<ul class="puntos">
+<li><b>Listado Simplificado (térmica)</b> — la lista de precios por el rollo, con el total, el mínimo, el máximo y el promedio. Se ve antes, carácter por carácter.</li>
+<li><b>Listado a PDF</b> — elija las colecciones de precio, la orientación, el ancho de las columnas y hasta dos columnas por hoja. Los nombres salen completos.</li>
+<li><b>Etiquetas a PDF</b> — las mismas etiquetas en hoja Carta, 3 o 4 por fila, con guías de corte para la impresora láser.</li>
+<li><b>Guardar</b> e <b>Imprimir Archivo PRN</b> — una tanda en un archivo, para mandarla después idéntica. Son del Propietario.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>El interruptor Datos del negocio pone el nombre, la dirección, el teléfono y el correo en el PDF, el Excel y el ticket.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/22-el-listado-por-termica-antes-de-imprimir.webp" width="560" height="796" loading="lazy" decoding="async" alt="El listado por térmica, antes de imprimir."><figcaption>El listado por térmica, antes de imprimir.</figcaption></figure>
+<figure class="figura"><img src="img/23-etiquetas-a-pdf-la-hoja-repartida.webp" width="700" height="638" loading="lazy" decoding="async" alt="Etiquetas a PDF: la hoja repartida."><figcaption>Etiquetas a PDF: la hoja repartida.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Solo el Propietario</div>
+<h1>Operaciones: los precios, calculados</h1>
+<p class="bajada">Todo lo que toca precios y reglas, en un menú del Propietario. Nada se escribe en AxisPOS sin preguntar.</p>
+<ul class="puntos">
+<li><b>Calcular Precio Venta</b> — del precio de compra al de venta: gastos repartidos, margen, denominación del cambio y la norma aplicada. Abre con el listado inicial y calcula con <b>Aplicar Cálculo</b>.</li>
+<li><b>Recalcular Precio Tarjeta</b> — si bonifica al que paga en efectivo, calcula la tarjeta que, con el descuento, cobra justo el efectivo. <b>Ajustes de Precios</b> deja recalcular, sobrescribir o teclear precios. Es la única que pide la <b>licencia activada</b>: durante la prueba el programa lo avisa y ofrece mostrar cómo se pide.</li>
+<li>Las dos preguntan antes de guardar, guardan un <b>respaldo</b> y tienen <b>Deshacer</b>. Escriben con el usuario del programa: no piden usuario ni contraseña salvo que ese no pueda.</li>
+<li><b>Continuar luego</b> guarda lo tecleado y lo elegido para retomarlo la próxima vez.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Con catálogos grandes aparece «Espere, AxisPrecios está Calculando» con el porciento: el programa sigue trabajando.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/24-calcular-precio-venta.webp" width="700" height="398" loading="lazy" decoding="async" alt="Calcular Precio Venta."><figcaption>Calcular Precio Venta.</figcaption></figure>
+<figure class="figura"><img src="img/25-recalcular-precio-tarjeta.webp" width="700" height="377" loading="lazy" decoding="async" alt="Recalcular Precio Tarjeta."><figcaption>Recalcular Precio Tarjeta.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Solo el Propietario</div>
+<h1>Las reglas de precio de AxisPOS, traducidas</h1>
+<p class="bajada">Operaciones › Mostrar Reglas en BD y Crear Reglas de Precios. Las fórmulas de AxisPOS, sin pelearse con la sintaxis.</p>
+<ul class="puntos">
+<li><b>Mostrar Reglas en BD</b> — cada condición en su columna y un color por lo que hace la regla: naranja descuenta, rojo detiene, azul cobra de otra colección, verde recarga.</li>
+<li>Arriba dice qué descuenta hoy la regla del efectivo. <b>Modificar</b> deja los cambios pendientes hasta <b>Guardar en AxisPOS</b>.</li>
+<li><b>Crear Reglas de Precios</b> — las condiciones de la lista, las operaciones con interruptores y, abajo, la fórmula tal como va a quedar escrita.</li>
+<li><b>Guardar en AxisPOS</b> las escribe con los mismos cuidados que los precios: credencial, respaldo antes, todo en una tanda y renglón en la bitácora.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Al terminar, cierre AxisPOS en cada caja y vuelva a abrirlo para que tome las reglas nuevas.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/26-mostrar-reglas-en-bd.webp" width="700" height="426" loading="lazy" decoding="async" alt="Mostrar Reglas en BD."><figcaption>Mostrar Reglas en BD.</figcaption></figure>
+<figure class="figura"><img src="img/27-crear-reglas-de-precios.webp" width="700" height="438" loading="lazy" decoding="async" alt="Crear Reglas de Precios."><figcaption>Crear Reglas de Precios.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Para el cierre de mes</div>
+<h1>Auditoría: qué pasó con los precios</h1>
+<p class="bajada">Un menú que no escribe nada. Solo lee la bitácora de AxisPOS para contestar las preguntas del cierre de mes.</p>
+<ul class="puntos">
+<li><b>Precios modificados</b> — fecha y hora, producto, precio anterior y nuevo, diferencia y usuario, de 30 días a un año. Verde subió, rojo bajó. También sale por la térmica.</li>
+<li><b>Tasas modificadas</b> y <b>Análisis VAR-TM</b> — quién movió cada tasa y si hay que preocuparse: cambios con la caja abierta o revertidos el mismo día.</li>
+<li><b>Historial de Cambios</b> — lo editado a mano en AxisPOS y lo que escribió AxisPrecios, con su respaldo.</li>
+<li><b>Alertas Inteligentes</b> — lo que se cobra distinto de lo que el dueño cree: existencias en negativo, ventas bajo el costo, reglas apagadas, unidades que no coinciden.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Todas salen a Excel y a PDF, y ninguna escribe una sola línea en AxisPOS.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/28-precios-modificados.webp" width="700" height="459" loading="lazy" decoding="async" alt="Precios modificados."><figcaption>Precios modificados.</figcaption></figure>
+<figure class="figura"><img src="img/29-alertas-inteligentes.webp" width="700" height="449" loading="lazy" decoding="async" alt="Alertas Inteligentes."><figcaption>Alertas Inteligentes.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Menú Listados</div>
+<h1>Diecisiete gráficos del negocio</h1>
+<p class="bajada">Listados › Gráficos. Los mismos números de Auditoría, mirados de lejos: si la cosa sube o baja, y dónde.</p>
+<ul class="puntos">
+<li><b>Qué está pidiendo atención</b> — las alertas por gravedad, los que más subieron y bajaron, cuánto se movió el precio cada día y el mapa de los cambios por semana.</li>
+<li><b>Cómo marcha el negocio</b> — los más vendidos, las categorías que más venden, productos sin ventas, existencias en negativo, márgenes por categoría, tasas y mermas.</li>
+<li>Períodos de 30, 60, 90, 180 o 365 días. Con el cursor sobre una marca sale el dato que la generó.</li>
+<li><b>Este gráfico a PDF</b> o <b>Todos los gráficos a PDF</b>: el informe del mes en un solo archivo.</li>
+</ul>
+</div><div class="figuras">
+<figure class="figura"><img src="img/04-graficos-del-negocio.webp" width="700" height="444" loading="lazy" decoding="async" alt="Gráficos: la lista a la izquierda, el período arriba y el dibujo en el medio."><figcaption>Gráficos: la lista a la izquierda, el período arriba y el dibujo en el medio.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Si tiene una duda</div>
+<h1>Ayuda: manual, guía rápida, problemas y FeedBack</h1>
+<p class="bajada">El botón Ayuda de la barra contesta las preguntas de siempre: cómo se hace, qué es lo que veo, cómo cuento lo que pasó y si salió una versión nueva.</p>
+<ul class="puntos">
+<li><b>Manual de usuario</b> — todos los temas con capturas, y <b>Descargar el manual en PDF</b> para dejarlo junto a la caja.</li>
+<li><b>Guía rápida</b> — esta misma guía. Viaja con el programa y se abre <b>sin internet</b>; el botón <b>Compartir</b>, al lado, deja una copia para mandarla por WhatsApp o por correo.</li>
+<li><b>Problemas y Soluciones</b> — se busca por lo que dice la pantalla, como «no imprime», y da la causa, el arreglo y la ventana donde se hace.</li>
+<li><b>FeedBack</b> — el parte de lo que pasó para el proveedor, con las versiones del programa, de AxisPOS y de MariaDB ya puestas. No manda nada solo.</li>
+<li><b>Buscar actualizaciones</b> — mira si salió una versión nueva y la instala si usted quiere. Es del Propietario y está en la lámina siguiente.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>Problemas y Soluciones es del Propietario y del Manager; el Cajero tiene FeedBack, que sirve para lo mismo.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/30-problemas-y-soluciones.webp" width="700" height="432" loading="lazy" decoding="async" alt="Problemas y Soluciones."><figcaption>Problemas y Soluciones.</figcaption></figure>
+<figure class="figura"><img src="img/31-feedback-el-parte-de-lo-que-paso.webp" width="700" height="567" loading="lazy" decoding="async" alt="FeedBack: el parte de lo que pasó."><figcaption>FeedBack: el parte de lo que pasó.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Versiones nuevas</div>
+<h1>Actualizar el programa sin perder nada</h1>
+<p class="bajada">Ayuda › Buscar actualizaciones mira si salió una versión más nueva, la baja y la instala. Lo hace cuando usted toca el botón: el programa no habla con internet por su cuenta.</p>
+<ul class="puntos">
+<li><b>Busca</b> en la página de AxisPrecios. Si ya tiene la última, lo dice y ahí termina.</li>
+<li><b>Pregunta</b> antes de bajar: muestra qué versión es, de qué fecha, cuánto pesa y qué trae.</li>
+<li><b>Descarga y comprueba</b> que el instalador sea el mismo que publicó el proveedor —firma y huella—; si no coincide, se detiene y no instala nada.</li>
+<li><b>Instala</b>: AxisPrecios se cierra, Windows pide permiso de administrador y el asistente hace el resto.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>No toca sus datos: la licencia, las contraseñas de los usuarios, la configuración y las etiquetas guardadas quedan como están. Y si el equipo no tiene internet, el instalador nuevo se pide al proveedor y se instala desde un pendrive igual.</span></div>
+</div><div class="figuras">
+<figure class="figura"><img src="img/32-buscar-actualizaciones-que-version-hay-que-trae.webp" width="633" height="579" loading="lazy" decoding="async" alt="Buscar actualizaciones: qué versión hay, qué trae y cuánto pesa."><figcaption>Buscar actualizaciones: qué versión hay, qué trae y cuánto pesa.</figcaption></figure>
+</div></div></section>
+<section class="lamina paso"><div class="dos-columnas"><div class="texto">
+<div class="eyebrow">Licencia de uso</div>
+<h1>La licencia se pide desde el programa</h1>
+<p class="bajada">15 días de prueba, contados de calendario desde que se instala. Después, una licencia emitida para ese equipo.</p>
+<ul class="puntos">
+<li><b>Acerca de › Solicitar licencia de uso</b> — muestra el trámite en seis pasos y arma la solicitud con los Datos del Negocio y el código del equipo. Si esos datos faltan, se escriben ahí mismo y quedan guardados en el programa.</li>
+<li>Se elige <b>Anual</b>, de 12 meses, o <b>De por vida</b>, y cómo paga: en efectivo, con tarjeta Clásica o por Zelle.</li>
+<li><b>Solicitar por WhatsApp</b>, <b>por Telegram</b> o <b>por SMS</b>: aparece un QR, se escanea con el teléfono y el mensaje sale ya escrito.</li>
+<li>Cuando llega: <b>Acerca de › Activar licencia de uso</b>, se pega el texto o se carga el archivo .lic.</li>
+<li>Durante la prueba trabaja todo: lo único que espera a la licencia es <b>Recalcular Precio Tarjeta</b>.</li>
+</ul>
+<div class="aviso consejo"><span class="sello">i</span><span>La licencia queda atada a ese equipo. Cambiar el disco no la rompe; reinstalar Windows o cambiar la placa madre, sí.</span></div>
+</div><div class="figuras dos">
+<figure class="figura"><img src="img/33-los-seis-pasos-de-la-solicitud.webp" width="700" height="349" loading="lazy" decoding="async" alt="Los seis pasos de la solicitud."><figcaption>Los seis pasos de la solicitud.</figcaption></figure>
+<figure class="figura"><img src="img/34-la-solicitud-con-el-qr-de-whatsapp.webp" width="700" height="632" loading="lazy" decoding="async" alt="La solicitud, con el QR de WhatsApp."><figcaption>La solicitud, con el QR de WhatsApp.</figcaption></figure>
+</div></div></section>
+<section class="lamina tips"><div class="encabezado-rejilla"><div class="eyebrow">Para su tienda</div><h1>Nueve usos que se pagan solos</h1><p class="bajada">Lo que hacen todos los días los mercados que ya lo usan.</p></div><div class="rejilla"><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.4V5a2 2 0 0 1 2-2h7.4a2 2 0 0 1 1.4.6l6.6 6.6a2 2 0 0 1 0 2.8l-7.4 7.4a2 2 0 0 1-2.8 0l-6.6-6.6a2 2 0 0 1-.6-1.4Z"/><circle cx="7.8" cy="7.8" r="1.4"/></svg></div><h3>Cambió un precio</h3><p>Busque el producto, haga clic en su fila e imprima esa sola etiqueta. Treinta segundos y la góndola queda al día.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M3 9 5 4h14l2 5"/><path d="M9 21v-6h6v6"/></svg></div><h3>Cambió una góndola entera</h3><p>Elija la categoría y vaya directo a Imprimir, sin marcar nada: sale toda la lista que está viendo.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg></div><h3>Aunque nadie lo tenga abierto</h3><p>Deje encendido «Vigilar con el programa cerrado»: avisa en la esquina de la pantalla, y «Ver solo esos» deja listas esas etiquetas.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M18.5 15.5 19.4 18l2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9Z"/></svg></div><h3>Oferta del fin de semana</h3><p>Con Agregar Promociones el cliente ve cuánto ahorra. Guarde el diseño en Mis Etiquetas y el próximo sábado está listo.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg></div><h3>Cartel de pasillo</h3><p>Etiqueta Libre arma un cartel sin datos de producto: «Hoy 2x1», «Frutas frescas», lo que haga falta.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4.5 4.5V21H6Z"/><path d="M14 3v5h4.5"/><path d="M9 13h6M9 17h4"/></svg></div><h3>Control semanal</h3><p>Saque el Listado Simplificado por la térmica, recorra la tienda y anote lo que no coincide. Media hora evita reclamos en la caja.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v14M7 5v14M10.5 5v10M13.5 5v14M17 5v10M20 5v14"/></svg></div><h3>Antes de una carga grande</h3><p>Revisar códigos de barras dice cuáles no sirven y por qué, antes de que salgan mal impresos.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9.2A3.2 3.2 0 0 0 12.2 8h-.6a2.6 2.6 0 0 0 0 5.2h.8a2.6 2.6 0 0 1 0 5.2h-.6A3.2 3.2 0 0 1 9 17.2"/><path d="M12 5.6v12.8"/></svg></div><h3>Bonificación al efectivo</h3><p>Recalcular Precio Tarjeta deja la tarjeta justa para que, con el descuento, el efectivo caiga en un precio de vuelto fácil.</p></article><article class="celda"><div class="marco"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 20 6v6.2c0 4.5-3.3 7.6-8 9-4.7-1.4-8-4.5-8-9V6Z"/><path d="m8.8 12 2.3 2.3 4.3-4.6"/></svg></div><h3>Cierre de mes</h3><p>Precios modificados y Alertas Inteligentes: quién tocó qué y lo que se está cobrando distinto. Todo sale a Excel y PDF.</p></article></div></section>
+<section class="lamina cierre"><div class="cierre-cuerpo"><div class="texto"><div class="eyebrow">Empiece hoy</div><h1>Pruébelo 15 días gratis</h1><p class="bajada">Imprime, exporta, calcula y configura igual que la versión con licencia; la única operación que espera a la licencia es Recalcular Precio Tarjeta. Cuando quiera seguir, la solicitud la arma el propio programa con los Datos del Negocio que ya cargó.</p><div class="precios"><div class="plan"><div class="nombre">Licencia anual</div><div class="valor">Un año</div><div class="detalle">De uso en este equipo, renovable.</div></div><div class="plan destacado"><div class="nombre">De por vida</div><div class="valor">Sin vencimiento</div><div class="detalle">Un solo pago, para siempre.</div></div></div><p class="bajada" style="margin:0 0 10px">Desde <b>Acerca de › Solicitar licencia de uso</b> el programa arma la solicitud y genera un QR: se escanea con el teléfono y el mensaje sale por WhatsApp, Telegram o SMS, ya escrito.</p><div class="demo"><div class="titulo"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M18.5 15.5 19.4 18l2.5.9-2.5.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9Z"/></svg>Solicite su demo sin compromiso</div><p>Se la mostramos funcionando con los productos de su propio negocio. Escriba a <b>Yunior Reyes</b>:</p><div class="acciones"><a class="cta principal" href="https://wa.me/5358146895?text=Hola%20Yunior%2C%20quiero%20una%20demo%20de%20AxisPrecios" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12Z"/></svg>WhatsApp +53 58146895</a><a class="cta clara" href="mailto:axissoftstgo@gmail.com?subject=Demo%20de%20AxisPrecios"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4.5 4.5V21H6Z"/><path d="M14 3v5h4.5"/><path d="M9 13h6M9 17h4"/></svg>axissoftstgo@gmail.com</a><a class="cta clara" href="https://t.me/Yunior_AxisSoft_Stgo" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M14 14h3v3h-3zM20 14v3M14 20h6"/></svg>@Yunior_AxisSoft_Stgo</a></div></div></div><div class="figuras">
+<figure class="figura"><img src="img/06-las-cuatro-zonas-de-la-pantalla-principal.webp" width="700" height="432" loading="lazy" decoding="async" alt="La pantalla principal, lista para trabajar."><figcaption>La pantalla principal, lista para trabajar.</figcaption></figure>
+</div></div></section>
+</main>
+<div class="lupa" id="lupa" role="dialog" aria-label="Captura ampliada">
+  <button class="cerrar" type="button" aria-label="Cerrar">&times;</button>
+  <figure>
+    <img src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+</div>
+<footer>
+  <button class="nav anterior" id="anterior" type="button">Anterior</button>
+  <div class="puntos-nav">
+<button class="punto" type="button" aria-label="Ir a la lámina 1"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 2"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 3"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 4"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 5"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 6"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 7"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 8"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 9"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 10"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 11"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 12"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 13"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 14"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 15"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 16"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 17"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 18"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 19"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 20"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 21"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 22"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 23"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 24"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 25"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 26"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 27"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 28"></button>
+<button class="punto" type="button" aria-label="Ir a la lámina 29"></button>
+  </div>
+  <button class="nav siguiente" id="siguiente" type="button">Siguiente</button>
+</footer>
+<script>
+var laminas = Array.prototype.slice.call(document.querySelectorAll('.lamina'));
+var puntos = Array.prototype.slice.call(document.querySelectorAll('.punto'));
+var anterior = document.getElementById('anterior');
+var siguiente = document.getElementById('siguiente');
+var progreso = document.getElementById('progreso');
+var cuenta = document.getElementById('cuenta');
+var actual = 0;
+
+function mostrar(indice) {
+  actual = Math.max(0, Math.min(laminas.length - 1, indice));
+  laminas.forEach(function (lamina, i) {
+    lamina.classList.toggle('activa', i === actual);
+  });
+  puntos.forEach(function (punto, i) {
+    punto.classList.toggle('activo', i === actual);
+    punto.setAttribute('aria-current', i === actual ? 'true' : 'false');
+  });
+  progreso.style.width = ((actual + 1) / laminas.length * 100) + '%';
+  cuenta.textContent = (actual + 1) + ' de ' + laminas.length;
+  anterior.disabled = actual === 0;
+  // En la ultima no hay a donde ir: el boton vuelve al principio.
+  siguiente.textContent = actual === laminas.length - 1
+    ? 'Volver al inicio'
+    : (actual === 0 ? 'Empezar' : 'Siguiente');
+  document.querySelector('main').scrollTop = 0;
+}
+
+siguiente.addEventListener('click', function () {
+  mostrar(actual === laminas.length - 1 ? 0 : actual + 1);
+});
+anterior.addEventListener('click', function () { mostrar(actual - 1); });
+puntos.forEach(function (punto, i) {
+  punto.addEventListener('click', function () { mostrar(i); });
+});
+document.addEventListener('keydown', function (evento) {
+  if (lupa.classList.contains('abierta')) {
+    if (evento.key === 'Escape' || evento.key === 'Enter' ||
+        evento.key === ' ') { evento.preventDefault(); cerrarLupa(); }
+    return;
+  }
+  if (evento.key === 'ArrowRight' || evento.key === 'PageDown' ||
+      evento.key === ' ') {
+    evento.preventDefault(); mostrar(actual + 1);
+  } else if (evento.key === 'ArrowLeft' || evento.key === 'PageUp') {
+    mostrar(actual - 1);
+  } else if (evento.key === 'Home') { mostrar(0);
+  } else if (evento.key === 'End') { mostrar(laminas.length - 1); }
+});
+// Deslizar con el dedo, como cualquier presentacion en el telefono.
+var lienzo = document.querySelector('main');
+var toqueX = null, toqueY = null;
+lienzo.addEventListener('touchstart', function (evento) {
+  if (evento.touches.length !== 1 || lupa.classList.contains('abierta')) {
+    toqueX = null; return;
+  }
+  toqueX = evento.touches[0].clientX;
+  toqueY = evento.touches[0].clientY;
+}, { passive: true });
+lienzo.addEventListener('touchend', function (evento) {
+  if (toqueX === null) { return; }
+  var fin = evento.changedTouches[0];
+  var dx = fin.clientX - toqueX, dy = fin.clientY - toqueY;
+  // Solo cuenta si fue claramente horizontal: si no, estaba leyendo.
+  if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+    mostrar(dx < 0 ? actual + 1 : actual - 1);
+  }
+  toqueX = null;
+}, { passive: true });
+
+// La captura, a pantalla completa. En el telefono es la unica forma de
+// leerla; en la computadora sirve para mirarla de cerca.
+var lupa = document.getElementById('lupa');
+var lupaImg = lupa.querySelector('img');
+var lupaPie = lupa.querySelector('figcaption');
+
+function abrirLupa(imagen) {
+  lupaImg.src = imagen.src;
+  lupaImg.alt = imagen.alt || '';
+  var pie = imagen.parentNode.querySelector('figcaption');
+  lupaPie.textContent = pie ? pie.textContent : '';
+  lupa.classList.add('abierta');
+}
+
+function cerrarLupa() {
+  lupa.classList.remove('abierta');
+  lupaImg.removeAttribute('src');
+}
+
+document.addEventListener('click', function (evento) {
+  var imagen = evento.target.closest ? evento.target.closest('.figura img') : null;
+  if (imagen) { abrirLupa(imagen); }
+});
+lupa.addEventListener('click', cerrarLupa);
+
+mostrar(0);
+</script>
+
+<script>
+// Enlace directo a una lamina (.../#lamina-7) y precarga de la siguiente,
+// para que en el telefono la imagen ya este cuando se pasa de pagina.
+(function () {
+  var original = mostrar;
+  function precargar(i) {
+    if (i < 0 || i >= laminas.length) { return; }
+    Array.prototype.forEach.call(laminas[i].querySelectorAll('img[src]'),
+      function (im) { var p = new Image(); p.src = im.src; });
+  }
+  mostrar = function (indice) {
+    original(indice);
+    try { history.replaceState(null, '', '#lamina-' + (actual + 1)); } catch (e) {}
+    precargar(actual + 1);
+  };
+  siguiente.replaceWith(siguiente.cloneNode(true));
+  anterior.replaceWith(anterior.cloneNode(true));
+  siguiente = document.getElementById('siguiente');
+  anterior = document.getElementById('anterior');
+  siguiente.addEventListener('click', function () {
+    mostrar(actual === laminas.length - 1 ? 0 : actual + 1);
+  });
+  anterior.addEventListener('click', function () { mostrar(actual - 1); });
+  puntos.forEach(function (punto, i) {
+    punto.addEventListener('click', function () { mostrar(i); });
+  });
+  var pedida = parseInt((location.hash.match(/lamina-(\d+)/) || [])[1], 10);
+  mostrar(pedida > 0 ? pedida - 1 : 0);
+  window.addEventListener('hashchange', function () {
+    var n = parseInt((location.hash.match(/lamina-(\d+)/) || [])[1], 10);
+    if (n > 0 && n - 1 !== actual) { mostrar(n - 1); }
+  });
+})();
+</script>
+</body>
+</html>
