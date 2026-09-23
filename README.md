@@ -4,9 +4,10 @@ Web de consulta de **AxisPrecios**, el generador de etiquetas de precios para Ax
 
 **Ver en línea:** https://cubanpos.github.io/axisprecios/
 
-30 láminas con el recorrido completo: conectar con la base de AxisPOS, definir el
+32 láminas con el recorrido completo: conectar con la base de AxisPOS, definir el
 precio que se imprime, la moneda, los datos del negocio, la impresora, el diseño de
-la etiqueta, los usuarios, las promociones, los listados, la auditoría, la licencia y las descargas.
+la etiqueta, los usuarios, las promociones, los listados, las producciones (fichas
+técnicas, ficha de costos y su análisis), la auditoría, la licencia y las descargas.
 
 - Se abre en la computadora y en el teléfono; se pasa con las flechas, con los
   botones o deslizando el dedo.
@@ -15,7 +16,7 @@ la etiqueta, los usuarios, las promociones, los listados, la auditoría, la lice
 
 ## Descargas
 
-La última lámina de la guía (`.../#lamina-29`) tiene los botones de descarga del
+La última lámina de la guía (`.../#lamina-31`) tiene los botones de descarga del
 instalador, los paquetes MSI, el manual y el video. Los archivos viven en las
 [releases del repositorio Apps](https://github.com/cubanpos/Apps/releases).
 
